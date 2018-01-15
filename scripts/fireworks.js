@@ -42,14 +42,13 @@ var Particle = function (x, y) {
   this.color    = randomColor()
   this.decay    = 0.015
   this.friction = 0.97
-  this.gravity  = 3
+  this.gravity  = 4
   this.position = {
     x: x,
     y: y,
   }
   this.size     = random(0.5, 5)
   this.velocity = randomInteger(5, 10)
-  console.log(this.angle)
 }
 
 Particle.prototype.draw = function () {
@@ -58,11 +57,10 @@ Particle.prototype.draw = function () {
 }
 
 Particle.prototype.update = function (index) {
-  this.velocity *= this.friction
-
+  this.velocity   *= this.friction
   this.position.x += Math.cos(this.angle) * this.velocity
   this.position.y += Math.sin(this.angle) * this.velocity + this.gravity
-  this.alpha -= this.decay
+  this.alpha      -= this.decay
   
   if (this.alpha <= this.decay) {
     particles.splice(index, 1)
@@ -71,6 +69,7 @@ Particle.prototype.update = function (index) {
 
 var animationLoop = function (now) {
   document.body.removeEventListener('click', animationLoop)
+  document.querySelector('.c-intro').classList.add('c-intro--hidden')
   
   delta         = now - lastFrameTime
   fps           = Math.round(1000 / delta)
