@@ -3,8 +3,30 @@
   <head>
     <title>HTML Canvas Fireworks</title>
     <link href="https://static.raspberrypi.org/styles/Bits/1.1.0/Bits.min.css" rel="stylesheet">
+    <style>
+      .c-intro {
+        background: rgba(255, 255, 255, .75);
+        color:      #222;
+        left:       0;
+        padding:    1rem 0;
+        position:   absolute;
+        text-align: center;
+        top:        50%;
+        transform:  translateY(-50%);
+        transition: opacity 250ms ease-out;
+        width:      100%;
+      }
+      
+      .c-intro--hidden {
+        opacity: 0;
+      }
+    </style>
   </head>
   <body class="u-bgcolor-ui-black">
+    <div class="c-intro">
+      <h1 class="o-type-display-large">Canvas Fireworks</h1>
+      <p class="o-type-base">Click to Start</a>
+    </div>
     <canvas id="fireworks-canvas"></canvas>
     <script src="./scripts/utils.js"></script>
     <script src="./scripts/fireworks.js"></script>
