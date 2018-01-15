@@ -1,26 +1,3 @@
-var correctValueForDPR = function (value) {
-  return value *= devicePixelRatio
-}
-
-var deltaSpeed = function (speed) {
-  return (speed * delta) * (60 / 1000)
-}
-
-var entitiyIsOutsideCanvasBounds = function (x, y, width, height) {
-  const outsideLeft   = x < -(width)
-  const outsideRight  = x - width > canvas.width
-  const outsideX      = outsideLeft || outsideRight
-  const outsideTop    = y < -(height)
-  const outsideBottom = y - height > canvas.height
-  const outsideY      = outsideTop || outsideBottom
-
-  return outsideX || outsideY
-}
-
-var mathClamp = function(value, min, max) {
-  return Math.min(Math.max(min, value), max)
-}
-
 var random = function (min, max) {
   if (typeof min === 'undefined') {
     min = 0
