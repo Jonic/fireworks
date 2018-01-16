@@ -4,17 +4,19 @@ var canvas,
   context,
   delta,
   devicePixelRatio,
+  fireworkGenerationTimeout,
   particles,
   fps,
   lastFrameTime,
   screen
-  
-canvas    = document.getElementById('fireworks-canvas')
-context   = canvas.getContext('2d')
-particles = []
-screen    = {
+
+canvas                    = document.getElementById('fireworks-canvas')
+context                   = canvas.getContext('2d')
+fireworkGenerationTimeout = 60
+particles                 = []
+screen                    = {
   height: document.body.clientHeight,
-  width: document.body.clientWidth,
+  width:  document.body.clientWidth,
 }
 
 canvas.height       = screen.height
@@ -26,14 +28,10 @@ var createFirework = function () {
   var x = randomInteger(100, screen.width - 100)
   var y = randomInteger(100, screen.height - 100)
 
-  for (var i = 0; i < randomInteger(50, 200); i += 1) {
+  for (var i = 0; i < randomInteger(50, 300); i += 1) {
     var particle = new Particle(x, y)
     particles.push(particle)
   }
-  
-  window.setTimeout(function () {
-    createFirework()
-  }, randomInteger(500, 2000))
 }
 
 var Particle = function (x, y) {
@@ -61,7 +59,7 @@ Particle.prototype.update = function (index) {
   this.position.x += Math.cos(this.angle) * this.velocity
   this.position.y += Math.sin(this.angle) * this.velocity + this.gravity
   this.alpha      -= this.decay
-  
+
   if (this.alpha <= this.decay) {
     particles.splice(index, 1)
   }
@@ -69,12 +67,13 @@ Particle.prototype.update = function (index) {
 
 var animationLoop = function (now) {
   document.body.removeEventListener('click', animationLoop)
+  document.body.removeEventListener('touchstart', animationLoop)
   document.querySelector('.c-intro').classList.add('c-intro--hidden')
-  
+
   delta         = now - lastFrameTime
   fps           = Math.round(1000 / delta)
   lastFrameTime = now
-  
+
   context.globalCompositeOperation = 'destination-out'
   context.fillStyle = 'rgba(0, 0, 0, 0.5)'
   context.fillRect(0, 0, screen.width, screen.height)
@@ -88,8 +87,16 @@ var animationLoop = function (now) {
   if (particles.length <= 0) {
     createFirework()
   }
+
+  if (fireworkGenerationTimeout <= 0) {
+    createFirework()
+    fireworkGenerationTimeout = randomInteger(15, 75)
+  }
   
+  fireworkGenerationTimeout -= 1
+
   window.requestAnimationFrame(animationLoop)
 }
 
 document.body.addEventListener('click', animationLoop)
+document.body.addEventListener('touchstart', animationLoop)
