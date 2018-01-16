@@ -1,0 +1,26 @@
+html, body {
+  height:   100vh;
+  overflow: hidden;
+}
+
+.c-canvas {
+  height: 100vh;
+  width:  100vw;
+}
+
+.c-intro {
+  background: rgba(255, 255, 255, .75);
+  color:      #222;
+  left:       0;
+  padding:    1rem 0;
+  position:   absolute;
+  text-align: center;
+  top:        50%;
+  transform:  translateY(-50%);
+  transition: opacity 250ms ease-out;
+  width:      100%;
+}
+
+.c-intro--hidden {
+  opacity: 0;
+}
